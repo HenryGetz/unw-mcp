@@ -95,9 +95,14 @@ Other installs:
 
 ```bash
 npx -y github:HenryGetz/unw-mcp          # run once (stdio; the client normally spawns it)
-npm install -g github:HenryGetz/unw-mcp  # global `unw-mcp` command
-npm pack github:HenryGetz/unw-mcp        # build a .tgz you can install elsewhere
+npm pack github:HenryGetz/unw-mcp        # builds dist/ inside the tarball
+npm install -g ./unw-mcp-0.1.0.tgz       # global `unw-mcp` command
 ```
+
+Use the tarball form for a global install: `npm install -g github:HenryGetz/unw-mcp` is
+unreliable because npm ≥ 11 runs the git checkout's build with the global install's flags
+inherited, so the build fails inside the checkout (`npm error git dep preparation failed`).
+That is an npm limitation, not a problem with the tarball or `npx` path.
 
 Or let [`add-mcp`](https://www.npmjs.com/package/add-mcp) write the client config for you
 (`claude-code`, `claude-desktop`, `cursor`, `vscode`, `opencode`, `codex`, `zed`, `windsurf`):
