@@ -8,6 +8,19 @@ assistant.
 > **Status: phase 3 / first release** — session, dashboard, academics, finances, dining,
 > academic calendar and page search. Read-only.
 
+## ⚠️ Unofficial — use at your own risk
+
+This is an **unofficial personal project**. It is **not affiliated with, endorsed by, or
+supported by** University of Northwestern – St. Paul, Pathify, Ellucian, Microsoft, or Bon
+Appétit. Use **your own account**, comply with every applicable term and policy (automation
+may violate them), and verify anything that matters against the official portal. There is no
+warranty and no liability for account lockout, data loss, policy/FERPA problems, or decisions
+made from the data. No credentials or PII are included in this repository — your local
+credentials and profile are yours to protect.
+
+Read [`DISCLAIMER.md`](DISCLAIMER.md) before running anything. Licensed under the
+[MIT License](LICENSE).
+
 ## Surface
 
 | Tool | Ops | Backing endpoints | Cache | Returns |
@@ -57,19 +70,49 @@ unw_calendar  { op, days?, limit?, query? }  # query filters academic/breaks/dea
 unw_pages     { op, query?, slug?, limit?, excerpt_chars? }
 ```
 
-## Install
+## Install (no clone)
 
-Requirements: Node >= 22, Playwright Chromium (`npx playwright install chromium`), and a
-Linux desktop only if you set `headless: false`.
+Requirements: Node >= 22 and Playwright Chromium (`npx playwright install chromium`); a Linux
+desktop/Xvfb only if you set `headless: false`.
+
+Point your MCP client at the GitHub repository directly — npm fetches the source, installs
+devDependencies, runs `prepare` (`npm run build`) and links the `unw-mcp` binary. No clone, no
+local build:
+
+```json
+{
+  "mcpServers": {
+    "unw": {
+      "command": "npx",
+      "args": ["-y", "github:HenryGetz/unw-mcp"],
+      "env": { "UNW_MCP_TIMEZONE": "America/Chicago", "UNW_MCP_HEADLESS": "1" }
+    }
+  }
+}
+```
+
+Other installs:
 
 ```bash
-npm install
-npm run build
+npx -y github:HenryGetz/unw-mcp          # run once (stdio; the client normally spawns it)
+npm install -g github:HenryGetz/unw-mcp  # global `unw-mcp` command
+npm pack github:HenryGetz/unw-mcp        # build a .tgz you can install elsewhere
+```
+
+The **first run builds `dist/`, then launches Chromium and completes the SAML/Entra handshake
+— expect ~90 s cold** on an empty profile. Warm starts answer `unw_session op=status` in about
+a second. `npx` caches the resolved commit; re-run with a fresh cache (`npm cache clean --force`
+or a new `npx --yes` invocation after the repo moves) to pick up new commits.
+
+## Install from source (for development)
+
+```bash
+npm install          # runs `prepare` → builds dist/
 npm run smoke        # tools/list over stdio, no browser
 npm run live-proof   # session + all dashboard/academic/finance ops, read-only
 ```
 
-Register the server (see `mcp.example.json`):
+Register the local checkout (see `mcp.example.json`):
 
 ```json
 {
@@ -227,8 +270,8 @@ balances are written to the repository. Live proof is read-only.
 
 ## Repository / CI
 
-This repository is **private by default**. It contains no account data, credentials, browser
-profiles or raw portal captures; `.gitignore` excludes `node_modules/`, `dist/`, `.env*`,
+This repository is **public** ([MIT](LICENSE)). It contains no account data, credentials,
+browser profiles or raw portal captures; `.gitignore` excludes `node_modules/`, `dist/`, `.env*`,
 `config.yaml`, `credentials.json`, `browser-profile/`, `.recon/`, `artifacts/` and `*.tgz`.
 Everything the server reads from `my.unw.edu` is **read-only** — the portal and Banner code
 paths issue GETs only (registration is never posted).

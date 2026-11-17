@@ -2,7 +2,7 @@
   "name": "unw-mcp",
   "version": "0.1.0",
   "private": true,
-  "description": "Read-only, token-efficient MCP server for the University of Northwestern \u2013 St. Paul myUNW student portal",
+  "description": "Read-only, token-efficient MCP server for the University of Northwestern – St. Paul myUNW student portal",
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -13,6 +13,8 @@
   "files": [
     "dist",
     "README.md",
+    "LICENSE",
+    "DISCLAIMER.md",
     "SECURITY.md",
     "config.example.yaml",
     "mcp.example.json",
@@ -25,7 +27,7 @@
   ],
   "scripts": {
     "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
-    "prepack": "npm run build",
+    "prepare": "npm run build",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
@@ -50,5 +52,18 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^5.1.0"
-  }
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Henry Getz",
+    "email": "HenryGetz@users.noreply.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenryGetz/unw-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HenryGetz/unw-mcp/issues"
+  },
+  "homepage": "https://github.com/HenryGetz/unw-mcp#readme"
 }
