@@ -99,10 +99,20 @@ npm install -g github:HenryGetz/unw-mcp  # global `unw-mcp` command
 npm pack github:HenryGetz/unw-mcp        # build a .tgz you can install elsewhere
 ```
 
-The **first run builds `dist/`, then launches Chromium and completes the SAML/Entra handshake
-— expect ~90 s cold** on an empty profile. Warm starts answer `unw_session op=status` in about
-a second. `npx` caches the resolved commit; re-run with a fresh cache (`npm cache clean --force`
-or a new `npx --yes` invocation after the repo moves) to pick up new commits.
+Or let [`add-mcp`](https://www.npmjs.com/package/add-mcp) write the client config for you
+(`claude-code`, `claude-desktop`, `cursor`, `vscode`, `opencode`, `codex`, `zed`, `windsurf`):
+
+```bash
+npx -y add-mcp github:HenryGetz/unw-mcp -a cursor -n unw \
+  --env UNW_MCP_TIMEZONE=America/Chicago -y
+```
+
+The **first run downloads the source, builds `dist/`, installs dependencies (~60–90 s with a
+cold npm cache), then launches Chromium and completes the SAML/Entra handshake — expect ~90 s
+cold** on an empty profile. Warm starts answer `unw_session op=status` in about a second.
+Playwright's Chromium binary is not bundled: on a clean machine run
+`npx playwright install chromium` once. `npx` caches the resolved commit, so after new commits
+clear it (`npm cache clean --force`) to pick them up.
 
 ## Install from source (for development)
 
