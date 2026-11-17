@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.local
+*.log
+*.tgz
+artifacts/
+.recon/
+.vitest/
+.DS_Store
+# never commit operator configuration or credentials
+config.yaml
+credentials.json
+browser-profile/

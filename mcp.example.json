@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "unw": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "cwd": "/absolute/path/to/unw-mcp",
+      "env": {
+        "UNW_MCP_TIMEZONE": "America/Chicago",
+        "UNW_MCP_HEADLESS": "1"
+      }
+    }
+  }
+}

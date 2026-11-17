@@ -1,0 +1,48 @@
+# myUNW MCP configuration. Place at ~/.config/unw-mcp/config.yaml (mode 0600 is ideal).
+# Every value below is the default; omit what you do not need to change.
+# Environment variables override this file (see .env.example).
+
+timezone: America/Chicago
+
+# Chromium runs headless by default. Set false only when debugging a sign-in.
+headless: true
+
+# In-memory response caches. Personalized data is minutes; public feeds longer.
+cache:
+  dashboard_ttl_minutes: 5
+  announcements_ttl_minutes: 2
+  tasks_ttl_minutes: 2
+  events_ttl_minutes: 5
+  quick_links_ttl_minutes: 10
+  profile_ttl_minutes: 10
+  dining_ttl_minutes: 60
+  academic_calendar_ttl_minutes: 360
+  pages_ttl_minutes: 1440
+  page_search_ttl_minutes: 10
+  # phase 2: Banner and finances
+  schedule_ttl_minutes: 10
+  grades_ttl_minutes: 30
+  gpa_ttl_minutes: 30
+  holds_ttl_minutes: 5
+  registration_ttl_minutes: 5
+  terms_ttl_minutes: 60
+  balances_ttl_minutes: 5
+  chapel_ttl_minutes: 15
+  financial_aid_ttl_minutes: 60
+
+max_results:
+  announcements: 5
+  events: 10
+  tasks: 20
+  pages: 10
+  preview_chars: 300
+  # phase 3 caps
+  dining_items_per_station: 25
+  dining_stations: 12
+  calendar: 20
+  page_body_chars: 4000
+
+limits:
+  # Events are fetched then filtered client-side (the upstream count is global).
+  event_fetch_limit: 60
+  event_window_days: 7
